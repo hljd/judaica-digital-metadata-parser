@@ -3,7 +3,7 @@ import pandas as pd
 import io
 from openpyxl.styles import Border, Side, Alignment
 
-st.title("Judaica Digital Metadata Parser (Prototype)")
+st.title("Judaica Digital Metadata Parser v1 (Prototype)")
 #st.header("Importing, Cleaning, Validation, Template Population, Exporting")
 
 # --- upload files ---
@@ -176,9 +176,9 @@ if desc_file:
     desc_source_type = st.selectbox("**Select Source for General Note / Shareshelf Description**",
                                     [None, "Descriptive Metadata Column", "NO GENERAL NOTE", "OTHER"])
     if desc_source_type == "Descriptive Metadata Column":
-        desc_note_col = st.selectbox("**Select the Note Column**", [None] + desc_cols)
+        desc_note_col = st.selectbox("Select the Note Column", [None] + desc_cols)
     elif desc_source_type == "OTHER":
-        desc_source_text = st.text_area("**Enter Custom General Note**")
+        desc_source_text = st.text_area("Enter Custom General Note")
 
     # check if user made all required selections
     if metadata_type is None:
@@ -233,7 +233,7 @@ if urns_file and desc_file and template_df is not None:
             if not template_credit_text:
                 st.warning("**Selected source has no corresponding note in the table.**")
         elif template_credit_type == "OTHER":
-            template_credit_text = st.text_area("**Enter Custom Crediting Information**")
+            template_credit_text = st.text_area("Enter Custom Crediting Information")
     else:
         st.error("**No valid Crediting-Notes Traslation Table available. Upload one or include the default file in the app repo.**")
 
