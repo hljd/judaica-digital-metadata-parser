@@ -392,10 +392,6 @@ if urns_file and desc_file and template_df is not None:
             if metadata_type == "Photographs":
                 populated_titles = "Judaica Photograph Collection - " + titles + " [CATALOGING IN PROCESS.]"
 
-        else:
-            st.warning("**Unknown Cataloging Type; titles left blank.**")
-            populated_titles = ""
-
         try:
             template_out.loc[:, "Title[34338]"] = populated_titles
         except KeyError as e:
