@@ -299,8 +299,8 @@ if urns_file and desc_file and template_df is not None:
     try:
         template_out.loc[:, "SSID"] = "NEW"
         template_out.loc[:, "File Count"] = 1
-        template_out.loc[:, "Repository[34349]"] = "Judaica Division, Widener Library[9000347138]"
-        template_out.loc[:, "Image Repository[34365]"] = "Judaica Division, Widener Library[9000347138]"
+        template_out.loc[:, "Repository[34349]"] = "Judaica Division, Widener Library"
+        template_out.loc[:, "Image Repository[34365]"] = "Judaica Division, Widener Library"
         template_out.loc[:, "Send To Harvard[34382]"] = True
         template_out.loc[:, "In House Use Only[34383]"] = False
         template_out.loc[:, "Export Only In Group[34411]"] = False
