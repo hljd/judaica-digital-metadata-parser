@@ -537,7 +537,11 @@ if urns_file and desc_file and template_df is not None:
     non_empty_cols = set()
     for col in template_out.columns:
         series = template_out[col]
-        has_content = series.astype(str).str.strip().replace("nan", "").ne("").any()
+        cleaned = series.where(series.notna(), "")
+        cleaned = cleaned.astype(str).str.strip()
+        cleaned = cleaned.replace(["nan", "NaN", "None", "NONE", "NaT", "<NA>"], "")
+        has_content = cleaned.ne("").any()
+
         if has_content:
             non_empty_cols.add(col)
 
@@ -561,7 +565,7 @@ if urns_file and desc_file and template_df is not None:
     removed_cols = [c for c in template_out.columns if c not in template_export.columns]
     st.write(f"Columns removed: {len(removed_cols)}") 
 
-    st.write(f"Columns with content: {len(non_empty_cols)}")
+    st.write(f"Columns with content_new: {len(non_empty_cols)}")
     st.write(f"Columns explicitly mentioned: {len(mentioned_cols)}")
     st.write(f"Always-keep columns: {always_keep}")  
 
