@@ -9,7 +9,7 @@ st.title("Judaica Digital Metadata Parser (Reduced Version)")
 st.header("Exporting SharedShelf template with selected columns only")
 
 # --- upload files ---
-urns_file = st.file_uploader("# **Upload URNs Excel**", type=["xlsx"])
+urns_file = st.file_uploader("**Upload URNs Excel**", type=["xlsx"])
 desc_file = st.file_uploader("**Upload Descriptive Metadata Excel**", type=["xlsx"])
 
 with st.expander("**📤 Optional Uploads (click to expand)**"):
@@ -181,7 +181,7 @@ if desc_file:
     cataloging_type = st.radio("**Select Cataloging Type**", ["Full Cataloging", "Provisional Records"], index=1, horizontal=True)
     geographic_type = st.selectbox("**Select Geographic Type**", [None, "Israel", "World Judaica"])
     if geographic_type == "World Judaica":
-        artstor_country_col = st.selectbox("**Select Country Column from Desc Metadata Spreadsheet**", desc_cols_with_none)
+        artstor_country_col = st.selectbox("Select Country Column from Desc Metadata Spreadsheet", desc_cols_with_none)
     else:
         artstor_country_col = ""
 
