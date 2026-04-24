@@ -552,7 +552,18 @@ if urns_file and desc_file and template_df is not None:
     # - plus Creator/Subject/... (as required) always
     keep_cols_set = non_empty_cols.union(mentioned_cols).union(always_keep)
     keep_cols = [c for c in template_order if (c in keep_cols_set and c in template_out.columns)]
-    template_export = template_out.loc[:, keep_cols].copy()    
+    template_export = template_out.loc[:, keep_cols].copy()
+
+    # column reduction debug
+    st.write(f"Total columns in template_out: {len(template_out.columns)}")
+    st.write(f"Total columns after reduction: {len(template_export.columns)}")
+
+    removed_cols = [c for c in template_out.columns if c not in template_export.columns]
+    st.write(f"Columns removed: {len(removed_cols)}") 
+
+    st.write(f"Columns with content: {len(non_empty_cols)}")
+    st.write(f"Columns explicitly mentioned: {len(mentioned_cols)}")
+    st.write(f"Always-keep columns: {always_keep}")  
 
 # --- preview ---
     st.dataframe(template_export.head(10))
