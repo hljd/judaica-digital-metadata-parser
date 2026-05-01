@@ -6,11 +6,11 @@ from openpyxl.styles import Border, Side, Alignment
 st.set_page_config(page_title="JDMP Reduced", layout="centered")
 
 st.title("Judaica Digital Metadata Parser (Reduced Version)")
-st.header("Exporting SharedShelf templates with selected columns only")
+st.header("Exporting clean SharedShelf templates with flexible input formats")
 
 # --- upload files ---
-urns_file = st.file_uploader("**Upload URNs Excel**", type=["xlsx"])
-desc_file = st.file_uploader("**Upload Descriptive Metadata Excel**", type=["xlsx"])
+urns_file = st.file_uploader("**Upload URNs (Excel or TXT)**", type=["xlsx", "txt"])
+desc_file = st.file_uploader("**Upload Descriptive Metadata (Excel)**", type=["xlsx"])
 
 with st.expander("**📤 Optional Uploads (click to expand)**"):
     template_file = st.file_uploader("Upload SharedShelf Template Excel (optional - if none uploaded, will use default SharedShelf template)", type=["xlsx"])
@@ -67,10 +67,23 @@ with st.expander("**📤 Optional Uploads (click to expand)**"):
             crediting_df = None
 
 # --- URNs file handling ---
+def load_urns_file(uploaded_file):
+    file_name = uploaded_file.name.lower()
+    if file_name.endswith(".xlsx"):
+        return pd.read_excel(uploaded_file)
+    elif file_name.endswith(".txt"):
+        return pd.read_csv(uploaded_file, sep="\t", dtype=str)
+    else:
+        raise ValueError("**Unsupported URNs file type. Please upload .xlsx or .txt.**")
+
 missing_selections = []
 
 if urns_file:
-    urns_df = pd.read_excel(urns_file)
+    try:
+        urns_df = load_urns_file(urns_file)
+    except Exception as e:
+        st.error(f"**Could not read URNs file: {e}**")
+        st.stop()
     st.divider()
     st.subheader("URNs")
 
